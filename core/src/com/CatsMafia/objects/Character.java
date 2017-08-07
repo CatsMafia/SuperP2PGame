@@ -14,27 +14,30 @@ public class Character extends GameObject {
     public Character(float x, float y, float width, float height,GameWorld world){
         super(x,y,width,height,world);
         isRightDirection = true;
-        onGround= true;
     }
 
     public void update(float delta) {
         Vector2 pos = new Vector2();
-        getRect().getPosition(pos);
-        pos.add(getVelocity().cpy().scl(delta));
+        getRect().getPosition(po
+        pos.add( getVelocity().cpy().scl(delta));
 
-        onGround = false;
-
-        for (Ground gr: getWorld().getGround()) {
-            if (checkCollision(gr.getRect()) && getY()+getHeight() >= gr.getY()) {
-                setPos(getX(),getWorld().GROUND_LEVEL-getHeight());
-                onGround = true;
-                break;
-            }
-        }
         if (!onGround) {
-            setVelocity(getVelocity().x,getVelocity().y + GameWorld.g);
+            Gdx.app.log("Coll","no coll ground " + getVelocity().y);
+            setVelocity(getVelocity().x,getVelocity().y + GameWorld.g*delta);
         }else {
             setVelocity(getVelocity().x,0);
+        }
+
+
+        for (Ground gr: getWorld().getGround()) {
+            if (checkCollision(gr.getRect())) {
+                if(gr.getY()+1 <= getY()+getHeight()) {
+                    Gdx.app.log("coll", "" + (getHeight()));
+                    setPos(getX(),gr.getY()- getHeight());
+                    onGround = true;
+                }
+                break;
+            }
         }
          /*if(pos.y + getHeight()< GameWorld.GROUND_LEVEL) {
             setVelocity(getVelocity().x,getVelocity().y + GameWorld.g);

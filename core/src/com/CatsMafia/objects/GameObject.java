@@ -31,8 +31,16 @@ public class GameObject {
         return rect.getX();
     }
 
+    public float getXB() {
+        return rect.getX();
+    }
+
     public float getY(){
         return rect.getY();
+    }
+
+    public float getYB(){
+        return rect.getY()+rect.getHeight();
     }
 
     public GameWorld getWorld() {

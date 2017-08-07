@@ -10,7 +10,7 @@ public class GameWorld {
 
     private Character character;
     private ArrayList<Ground> ground;
-    public static final int g = 10;
+    public static final int g = 300;
     public static final int GROUND_LEVEL = 320;
 
     public GameWorld() {

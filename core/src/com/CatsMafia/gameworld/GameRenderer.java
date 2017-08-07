@@ -48,23 +48,23 @@ public class GameRenderer {
                     batcher.draw((TextureRegion) AssetsLoader.jumpAnimR.getKeyFrame(runTime), character.getX(), character.getY(), character.getWidth(), character.getHeight());
                 }
             }else {
-                batcher.draw((TextureRegion) AssetsLoader.walkAnimR.getKeyFrame(runTime), character.getX(), character.getY(), character.getWidth(), character.getHeight());
+                batcher.draw((TextureRegion) AssetsLoader.walkAnimR.getKeyFrame(runTime), character.getXB(), character.getY(), character.getWidth(), character.getHeight());
             }
         }else {
             if (!character.isMove()) {
                 if(character.isOnGround()) {
-                    batcher.draw((TextureRegion) AssetsLoader.idleAnimL.getKeyFrame(runTime), character.getX(), character.getY(), character.getWidth(), character.getHeight());
+                    batcher.draw((TextureRegion) AssetsLoader.idleAnimL.getKeyFrame(runTime), character.getXB(), character.getY(), character.getWidth(), character.getHeight());
                 }else {
-                    batcher.draw((TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime), character.getX(), character.getY(), character.getWidth(), character.getHeight());
+                    batcher.draw((TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime), character.getXB(), character.getYB(), character.getWidth(), character.getHeight());
                 }
             }else {
-                batcher.draw((TextureRegion) AssetsLoader.walkAnimL.getKeyFrame(runTime), character.getX(), character.getY(), character.getWidth(), character.getHeight());
+                batcher.draw((TextureRegion) AssetsLoader.walkAnimL.getKeyFrame(runTime), character.getXB(), character.getYB(), character.getWidth(), character.getHeight());
             }
         }
 
         ArrayList<Ground> grounds = myWorld.getGround();
         for (int i = 0; i < grounds.size(); i++) {
-            batcher.draw(AssetsLoader.ground,grounds.get(i).getX(),grounds.get(i).getY(),grounds.get(i).getWidth(),grounds.get(i).getHeight());
+            batcher.draw(AssetsLoader.ground,grounds.get(i).getXB(),grounds.get(i).getYB(),grounds.get(i).getWidth(),grounds.get(i).getHeight());
         }
         batcher.end();
     }
