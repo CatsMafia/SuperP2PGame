@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class GameWorld {
 
-    private Character character;
-    private ArrayList<Ground> ground;
-    public static final int g = 300;
-    public static final int GROUND_LEVEL = 320;
+    private Character character; // персонаж , главный герой
+    private ArrayList<Ground> ground; // земля матушка
+    public static final int g = 300; // ускорение свободного падения
+    public static final int GROUND_LEVEL = 320; // уровень земди
 
     public GameWorld() {
         ground = new ArrayList<Ground>();
@@ -23,7 +23,7 @@ public class GameWorld {
 
     public void update(float delta) {
         character.update(delta);
-    }
+    } // delta время между update
 
     public Character getCharacter() {
         return character;

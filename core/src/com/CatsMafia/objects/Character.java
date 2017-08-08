@@ -7,9 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Character extends GameObject {
 
-    private boolean isRightDirection;
-    private boolean isMove;
-    private boolean onGround;
+    private boolean isRightDirection; // направлен влево или вправо
+    private boolean isMove; // движется ли персонаж или нет
+    private boolean onGround; // находится на земле или нет
 
     public Character(float x, float y, float width, float height,GameWorld world){
         super(x,y,width,height,world);
@@ -17,19 +17,11 @@ public class Character extends GameObject {
     }
 
     public void update(float delta) {
-        Vector2 pos = new Vector2();
-        getRect().getPosition(pos);
-        pos.add( getVelocity().cpy().scl(delta));
+        Vector2 pos = new Vector2(); //
+        getRect().getPosition(pos);  // нахождения позиции у персонажа
+        pos.add( getVelocity().cpy().scl(delta));  // добавляем к посиции корость умноженую на delta
 
-        if (!onGround) {
-            Gdx.app.log("Coll","no coll ground " + getVelocity().y);
-            setVelocity(getVelocity().x,getVelocity().y + GameWorld.g*delta);
-        }else {
-            setVelocity(getVelocity().x,0);
-        }
-
-
-        for (Ground gr: getWorld().getGround()) {
+        for (Ground gr: getWorld().getGround()) { // проверям коллизию со всей землей
             if (checkCollision(gr.getRect())) {
                 if(gr.getY()+1 <= getY()+getHeight()) {
                     Gdx.app.log("coll", "" + (getHeight()));
@@ -39,6 +31,14 @@ public class Character extends GameObject {
                 break;
             }
         }
+
+        if (!onGround) {
+            Gdx.app.log("Coll","no coll ground " + getVelocity().y);
+            setVelocity(getVelocity().x,getVelocity().y + GameWorld.g*delta); //  установить обновленую скорость при падении
+        }else {
+            setVelocity(getVelocity().x,0); // при падении на земль скорость установить в 0
+        }
+
          /*if(pos.y + getHeight()< GameWorld.GROUND_LEVEL) {
             setVelocity(getVelocity().x,getVelocity().y + GameWorld.g);
         }else {
@@ -48,7 +48,7 @@ public class Character extends GameObject {
         getRect().setPosition(pos);
     }
 
-    public void move(boolean isRight) {
+    public void move(boolean isRight) { // движение вызов из Input Handler
         if(onGround) {
             isMove = true;
             isRightDirection = isRight;
@@ -60,17 +60,17 @@ public class Character extends GameObject {
         }
     }
 
-    public void stop(boolean isRight) {
+    public void stop(boolean isRight) { // остановка персонажа
         isMove = false;
         isRightDirection = isRight;
         setVelocity(0,getVelocity().y);
     }
 
-    public void jump() {
+    public void jump() { // прыжок
         if (onGround) {
             onGround = false;
             isMove = false;
-            setVelocity(getVelocity().x,-300);
+            setVelocity(getVelocity().x,-700);
         }
     }
 

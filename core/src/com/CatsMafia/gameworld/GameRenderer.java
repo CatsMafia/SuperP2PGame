@@ -17,9 +17,11 @@ public class GameRenderer {
     public static final int HEIGHT_GAME = 720;
 
     private GameWorld myWorld;
-    private OrthographicCamera cam;
-    private SpriteBatch batcher;
+    private OrthographicCamera cam; // камера через которую смотрит пользователь
+    private SpriteBatch batcher; // холст
+
     private Character character;
+    private ArrayList<Ground> grounds;
 
     public GameRenderer(GameWorld world) {
         myWorld = world;
@@ -32,11 +34,12 @@ public class GameRenderer {
         initGameObjects();
     }
 
-    private void initGameObjects(){
+    private void initGameObjects(){ // инициализация объектов
         character = myWorld.getCharacter();
+        grounds = myWorld.getGround();
     }
 
-    public void render(float runTime) {
+    public void render(float runTime) { // метод для отрисовки
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batcher.begin();
@@ -62,7 +65,7 @@ public class GameRenderer {
             }
         }
 
-        ArrayList<Ground> grounds = myWorld.getGround();
+
         for (int i = 0; i < grounds.size(); i++) {
             batcher.draw(AssetsLoader.ground,grounds.get(i).getXB(),grounds.get(i).getYB(),grounds.get(i).getWidth(),grounds.get(i).getHeight());
         }

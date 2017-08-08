@@ -6,9 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GameObject {
 
-    private Vector2 velocity;
-    private Rectangle rect;
-    private GameWorld world;
+    private Vector2 velocity; // скорость объекта
+    private Rectangle rect; // квадрат вокруг обьекта
+    private GameWorld world; // Окружающий мир
+
     public GameObject(float x, float y, float width, float height, GameWorld world) {
         this.world = world;
         rect = new Rectangle(x,y,width,height);
@@ -17,7 +18,7 @@ public class GameObject {
 
     public boolean checkCollision(Rectangle obj) {
         return rect.overlaps(obj);
-    }
+    } // проверяет соприкосновение с другим объектом
 
     public float getWidth() {
         return rect.getWidth();

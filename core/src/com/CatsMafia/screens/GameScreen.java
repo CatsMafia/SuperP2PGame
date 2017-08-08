@@ -15,7 +15,7 @@ public class GameScreen implements Screen {
     public GameScreen(){
         world = new GameWorld();
         renderer = new GameRenderer(world);
-        Gdx.input.setInputProcessor(new InputHandler(world.getCharacter()));
+        Gdx.input.setInputProcessor(new InputHandler(world.getCharacter())); // обработчик нажатий
     }
 
     @Override
@@ -25,9 +25,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        runTime += delta;
-        world.update(delta);
-        renderer.render(runTime);
+        runTime += delta; // для анимации необходима
+        world.update(delta); //
+        renderer.render(runTime); // отрисовка объектов
     }
 
     @Override
