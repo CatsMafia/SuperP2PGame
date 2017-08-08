@@ -18,7 +18,7 @@ public class Character extends GameObject {
 
     public void update(float delta) {
         Vector2 pos = new Vector2();
-        getRect().getPosition(po
+        getRect().getPosition(pos);
         pos.add( getVelocity().cpy().scl(delta));
 
         if (!onGround) {
