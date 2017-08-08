@@ -32,16 +32,8 @@ public class GameObject {
         return rect.getX();
     }
 
-    public float getXB() {
-        return rect.getX();
-    }
-
     public float getY(){
         return rect.getY();
-    }
-
-    public float getYB(){
-        return rect.getY()+rect.getHeight();
     }
 
     public GameWorld getWorld() {
@@ -65,6 +57,6 @@ public class GameObject {
     }
 
     public void setPos(float x,float y) {
-        this.rect = new Rectangle(x,y,rect.getWidth(),rect.getHeight());
+        rect = rect.setPosition(x,y);
     }
 }

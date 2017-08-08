@@ -23,28 +23,20 @@ public class Character extends GameObject {
 
         for (Ground gr: getWorld().getGround()) { // проверям коллизию со всей землей
             if (checkCollision(gr.getRect())) {
-                if(gr.getY()+1 <= getY()+getHeight()) {
-                    Gdx.app.log("coll", "" + (getHeight()));
-                    setPos(getX(),gr.getY()- getHeight());
+                if(gr.getY()-gr.getHeight()*1.5 <= pos.y) {
+                    pos.y = (float) (gr.getY()-gr.getHeight()*1.5);
+                    setVelocity(getVelocity().x,0); // при падении на земль скорость установить в 0
                     onGround = true;
+                    break;
                 }
-                break;
             }
         }
 
         if (!onGround) {
             Gdx.app.log("Coll","no coll ground " + getVelocity().y);
             setVelocity(getVelocity().x,getVelocity().y + GameWorld.g*delta); //  установить обновленую скорость при падении
-        }else {
-            setVelocity(getVelocity().x,0); // при падении на земль скорость установить в 0
         }
 
-         /*if(pos.y + getHeight()< GameWorld.GROUND_LEVEL) {
-            setVelocity(getVelocity().x,getVelocity().y + GameWorld.g);
-        }else {
-            onGround=true;
-            setVelocity(getVelocity().x,0);
-        }*/
         getRect().setPosition(pos);
     }
 
@@ -70,7 +62,7 @@ public class Character extends GameObject {
         if (onGround) {
             onGround = false;
             isMove = false;
-            setVelocity(getVelocity().x,-700);
+            setVelocity(getVelocity().x,-300);
         }
     }
 

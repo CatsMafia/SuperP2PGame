@@ -16,7 +16,7 @@ public class GameWorld {
     public GameWorld() {
         ground = new ArrayList<Ground>();
         for (int i = 0; i < GameRenderer.WIDTH_GAME/64; i++) {
-            ground.add(new Ground(i*64,GameWorld.GROUND_LEVEL,64,64,this));
+            ground.add(new Ground(i*64,GameWorld.GROUND_LEVEL+64,64,64,this));
         }
         character = new Character(0f,0f,100,100,this);
     }
