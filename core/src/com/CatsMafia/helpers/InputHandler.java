@@ -15,6 +15,9 @@ public class InputHandler implements InputProcessor {
     public boolean keyDown(int keycode) {
         Gdx.app.log("InputHandler", "" + keycode);
         switch (keycode) {
+            case 29:
+                character.hit();
+                break;
             case 21:
                 character.move(false);
                 break;

@@ -1,6 +1,7 @@
 package com.CatsMafia.gameworld;
 
 
+import com.CatsMafia.objects.Bullet;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -45,29 +46,45 @@ public class GameRenderer {
         batcher.begin();
 
         for (int i = 0; i < grounds.size(); i++) {
-            batcher.draw(AssetsLoader.ground,grounds.get(i).getX(),grounds.get(i).getY(),grounds.get(i).getWidth(),grounds.get(i).getHeight());
+            grounds.get(i).draw(batcher);
         }
 
         if (character.isRightDirection()) {
-            if (!character.isMove()) {
+            if (character.isHit()) {
+                character.draw(batcher, (TextureRegion) AssetsLoader.hitAnimR.getKeyFrame(runTime));
+            }else if (!character.isMove()) {
                 if (character.isOnGround()) {
-                    batcher.draw((TextureRegion) AssetsLoader.idleAnimR.getKeyFrame(runTime), character.getX(), character.getY(),character.getWidth(),character.getHeight());
+                    character.draw(batcher,(TextureRegion) AssetsLoader.idleAnimR.getKeyFrame(runTime));
                 }else {
-                    batcher.draw((TextureRegion) AssetsLoader.jumpAnimR.getKeyFrame(runTime), character.getX(), character.getY(),character.getWidth(),character.getWidth());
+                    character.draw(batcher,(TextureRegion) AssetsLoader.jumpAnimR.getKeyFrame(runTime));
                 }
             }else {
-                batcher.draw((TextureRegion) AssetsLoader.walkAnimR.getKeyFrame(runTime), character.getX(), character.getY(),character.getWidth(),character.getHeight());
+                if (!character.isOnGround()) {
+                    character.draw(batcher,(TextureRegion) AssetsLoader.jumpAnimR.getKeyFrame(runTime));
+                }else {
+                    character.draw(batcher, (TextureRegion) AssetsLoader.walkAnimR.getKeyFrame(runTime));
+                }
             }
         }else {
-            if (!character.isMove()) {
+            if (character.isHit()) {
+                character.draw(batcher, (TextureRegion) AssetsLoader.hitAnimL.getKeyFrame(runTime));
+            }else if (!character.isMove()) {
                 if(character.isOnGround()) {
-                    batcher.draw((TextureRegion) AssetsLoader.idleAnimL.getKeyFrame(runTime), character.getX(), character.getY(),character.getWidth(),character.getHeight());
+                    character.draw(batcher,(TextureRegion) AssetsLoader.idleAnimL.getKeyFrame(runTime));
                 }else {
-                    batcher.draw((TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime), character.getX(), character.getY(),character.getWidth(),character.getHeight());
+                    character.draw(batcher,(TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime));
                 }
             }else {
-                batcher.draw((TextureRegion) AssetsLoader.walkAnimL.getKeyFrame(runTime), character.getX(), character.getY(),character.getWidth(),character.getHeight());
+                if (!character.isOnGround()) {
+                    character.draw(batcher,(TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime));
+                }else {
+                    character.draw(batcher, (TextureRegion) AssetsLoader.walkAnimL.getKeyFrame(runTime));
+                }
             }
+        }
+
+        for (Bullet b: myWorld.getBullets()) {
+            b.draw(batcher);
         }
 
         batcher.end();

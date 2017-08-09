@@ -3,6 +3,7 @@ package com.CatsMafia.objects;
 import com.CatsMafia.gameworld.GameWorld;
 import com.CatsMafia.gameworld.Ground;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Character extends GameObject {
@@ -10,16 +11,28 @@ public class Character extends GameObject {
     private boolean isRightDirection; // направлен влево или вправо
     private boolean isMove; // движется ли персонаж или нет
     private boolean onGround; // находится на земле или нет
+    private boolean isHit;
+    private float hitTime;
+    private boolean Lives = true;
 
     public Character(float x, float y, float width, float height,GameWorld world){
-        super(x,y,width,height,world);
+        super(x,y,width,height,world, (TextureRegion) null);
         isRightDirection = true;
+        isHit = false;
+        hitTime = 0;
     }
 
     public void update(float delta) {
         Vector2 pos = new Vector2(); //
         getRect().getPosition(pos);  // нахождения позиции у персонажа
         pos.add( getVelocity().cpy().scl(delta));  // добавляем к посиции корость умноженую на delta
+
+        if (isHit) {
+            hitTime += delta;
+            if(hitTime >= 0.5) {
+                isHit = false;
+            }
+        }
 
         for (Ground gr: getWorld().getGround()) { // проверям коллизию со всей землей
             if (checkCollision(gr.getRect())) {
@@ -41,7 +54,6 @@ public class Character extends GameObject {
     }
 
     public void move(boolean isRight) { // движение вызов из Input Handler
-        if(onGround) {
             isMove = true;
             isRightDirection = isRight;
             if (isRight) {
@@ -49,7 +61,6 @@ public class Character extends GameObject {
             }else {
                 setVelocity(-75,getVelocity().y);
             }
-        }
     }
 
     public void stop(boolean isRight) { // остановка персонажа
@@ -66,6 +77,15 @@ public class Character extends GameObject {
         }
     }
 
+    public void hit() {
+        Vector2 startPos = new Vector2();
+        startPos = getRect().getCenter(startPos);
+        startPos.x = getX()+getWidth();
+        getWorld().addBullet(new Bullet(startPos.x,startPos.y,16,16,getWorld(),null,64,isRightDirection));
+        isHit = true;
+        hitTime = 0;
+    }
+
     public boolean isRightDirection() {
         return isRightDirection;
     }
@@ -76,5 +96,9 @@ public class Character extends GameObject {
 
     public boolean isOnGround() {
         return onGround;
+    }
+
+    public boolean isHit() {
+        return isHit;
     }
 }
