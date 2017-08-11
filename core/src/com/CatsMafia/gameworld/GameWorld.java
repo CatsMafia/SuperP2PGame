@@ -1,5 +1,7 @@
 package com.CatsMafia.gameworld;
 
+import com.CatsMafia.helpers.AssetsLoader;
+import com.CatsMafia.helpers.ParsGson;
 import com.CatsMafia.objects.Bullet;
 import com.CatsMafia.objects.Character;
 import com.CatsMafia.objects.GameObject;
@@ -11,16 +13,15 @@ import java.util.ArrayList;
 public class GameWorld {
 
     private Character character; // персонаж , главный герой
-    private ArrayList<Ground> ground; // земля матушка
+    //private ArrayList<Ground> ground; // земля матушка
     private ArrayList<Bullet> bullets;
     public static final int g = 300; // ускорение свободного падения
     public static final int GROUND_LEVEL = 320; // уровень земди
+    private Map map;
 
     public GameWorld() {
-        ground = new ArrayList<Ground>();
-        for (int i = 0; i < GameRenderer.WIDTH_GAME/64; i++) {
-            ground.add(new Ground(i*64,GameWorld.GROUND_LEVEL+64,64,64,this));
-        }
+        ParsGson parsGson = new ParsGson();
+        map = parsGson.parsMap(this);
         character = new Character(0f,0f,100,100,this);
         bullets = new ArrayList<Bullet>();
     }
@@ -43,8 +44,8 @@ public class GameWorld {
         return character;
     }
 
-    public ArrayList<Ground> getGround() {
-        return ground;
+    public Map getMap() {
+        return map;
     }
 
     public void addBullet(Bullet bullet) {

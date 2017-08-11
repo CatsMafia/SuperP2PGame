@@ -1,7 +1,6 @@
 package com.CatsMafia.objects;
 
 import com.CatsMafia.gameworld.GameWorld;
-import com.CatsMafia.gameworld.Ground;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -33,18 +32,15 @@ public class Character extends GameObject {
                 isHit = false;
             }
         }
-
-        for (Ground gr: getWorld().getGround()) { // проверям коллизию со всей землей
-            if (checkCollision(gr.getRect())) {
-                if(gr.getY()-gr.getHeight()*1.5 <= pos.y) {
-                    pos.y = (float) (gr.getY()-gr.getHeight()*1.5);
-                    setVelocity(getVelocity().x,0); // при падении на земль скорость установить в 0
-                    onGround = true;
-                    break;
-                }
+        onGround = false;
+        for (GameObject go: getWorld().getMap().getGameObjects()) { // проверям коллизию со всей землей
+            if (go.getY() - go.getHeight()*1.5 <= pos.y && pos.y <= go.getY() && pos.x+getWidth()/2 >= go.getX() && pos.x + getWidth()/2 <= go.getX()+go.getWidth()) {
+                pos.y = (float) (go.getY()-go.getHeight()*1.5);
+                setVelocity(getVelocity().x,0); // при падении на земль скорость установить в 0
+                onGround = true;
+                break;
             }
         }
-
         if (!onGround) {
             Gdx.app.log("Coll","no coll ground " + getVelocity().y);
             setVelocity(getVelocity().x,getVelocity().y + GameWorld.g*delta); //  установить обновленую скорость при падении
@@ -57,9 +53,9 @@ public class Character extends GameObject {
             isMove = true;
             isRightDirection = isRight;
             if (isRight) {
-                setVelocity(75,getVelocity().y);
+                setVelocity(175,getVelocity().y);
             }else {
-                setVelocity(-75,getVelocity().y);
+                setVelocity(-175,getVelocity().y);
             }
     }
 

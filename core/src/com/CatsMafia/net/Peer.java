@@ -10,7 +10,7 @@ import com.CatsMafia.net.*;
 
 import javax.print.attribute.HashAttributeSet;
 
-class Peer{
+public class Peer{
 
     private ServerSocket peerSocket;
     private Socket[] sockets;
@@ -18,7 +18,7 @@ class Peer{
     private ArrayList<Handler> handlers;
     private PrintWriter[] outs;
 
-    Peer(int port, String[] ips, int[] ports, int countOfPlayers, int id){
+    public Peer(int port, String[] ips, int[] ports, int countOfPlayers, int id){
         countOfPlayers--;
         id--;
         try {

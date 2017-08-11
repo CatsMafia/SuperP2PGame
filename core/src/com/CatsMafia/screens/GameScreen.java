@@ -1,5 +1,6 @@
 package com.CatsMafia.screens;
 
+import com.CatsMafia.helpers.ParsGson;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.CatsMafia.gameworld.GameRenderer;
@@ -13,6 +14,7 @@ public class GameScreen implements Screen {
     private float runTime;
 
     public GameScreen(){
+
         world = new GameWorld();
         renderer = new GameRenderer(world);
         Gdx.input.setInputProcessor(new InputHandler(world.getCharacter())); // обработчик нажатий

@@ -19,74 +19,70 @@ public class GameRenderer {
 
     private GameWorld myWorld;
     private OrthographicCamera cam; // камера через которую смотрит пользователь
-    private SpriteBatch batcher; // холст
+    private SpriteBatch batch; // холст
 
     private Character character;
-    private ArrayList<Ground> grounds;
+    private Map map;
 
     public GameRenderer(GameWorld world) {
         myWorld = world;
         cam = new OrthographicCamera();
         cam.setToOrtho(true, 1280, 720);
 
-        batcher = new SpriteBatch();
-        batcher.setProjectionMatrix(cam.combined);
+        batch = new SpriteBatch();
+        batch.setProjectionMatrix(cam.combined);
 
         initGameObjects();
     }
 
     private void initGameObjects(){ // инициализация объектов
         character = myWorld.getCharacter();
-        grounds = myWorld.getGround();
+        map = myWorld.getMap();
     }
 
     public void render(float runTime) { // метод для отрисовки
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batcher.begin();
-
-        for (int i = 0; i < grounds.size(); i++) {
-            grounds.get(i).draw(batcher);
-        }
-
+        batch.begin();
+        map.draw(batch);
         if (character.isRightDirection()) {
             if (character.isHit()) {
-                character.draw(batcher, (TextureRegion) AssetsLoader.hitAnimR.getKeyFrame(runTime));
+                character.draw(batch, (TextureRegion) AssetsLoader.hitAnimR.getKeyFrame(runTime));
             }else if (!character.isMove()) {
                 if (character.isOnGround()) {
-                    character.draw(batcher,(TextureRegion) AssetsLoader.idleAnimR.getKeyFrame(runTime));
+                    character.draw(batch,(TextureRegion) AssetsLoader.idleAnimR.getKeyFrame(runTime));
                 }else {
-                    character.draw(batcher,(TextureRegion) AssetsLoader.jumpAnimR.getKeyFrame(runTime));
+                    character.draw(batch,(TextureRegion) AssetsLoader.jumpAnimR.getKeyFrame(runTime));
                 }
             }else {
                 if (!character.isOnGround()) {
-                    character.draw(batcher,(TextureRegion) AssetsLoader.jumpAnimR.getKeyFrame(runTime));
+                    character.draw(batch,(TextureRegion) AssetsLoader.jumpAnimR.getKeyFrame(runTime));
                 }else {
-                    character.draw(batcher, (TextureRegion) AssetsLoader.walkAnimR.getKeyFrame(runTime));
+                    character.draw(batch, (TextureRegion) AssetsLoader.walkAnimR.getKeyFrame(runTime));
                 }
             }
         }else {
             if (character.isHit()) {
-                character.draw(batcher, (TextureRegion) AssetsLoader.hitAnimL.getKeyFrame(runTime));
+                character.draw(batch, (TextureRegion) AssetsLoader.hitAnimL.getKeyFrame(runTime));
             }else if (!character.isMove()) {
                 if(character.isOnGround()) {
-                    character.draw(batcher,(TextureRegion) AssetsLoader.idleAnimL.getKeyFrame(runTime));
+                    character.draw(batch,(TextureRegion) AssetsLoader.idleAnimL.getKeyFrame(runTime));
                 }else {
-                    character.draw(batcher,(TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime));
+                    character.draw(batch,(TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime));
                 }
             }else {
                 if (!character.isOnGround()) {
-                    character.draw(batcher,(TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime));
+                    character.draw(batch,(TextureRegion) AssetsLoader.jumpAnimL.getKeyFrame(runTime));
                 }else {
-                    character.draw(batcher, (TextureRegion) AssetsLoader.walkAnimL.getKeyFrame(runTime));
+                    character.draw(batch, (TextureRegion) AssetsLoader.walkAnimL.getKeyFrame(runTime));
                 }
             }
         }
 
         for (Bullet b: myWorld.getBullets()) {
-            b.draw(batcher);
+            b.draw(batch);
         }
 
-        batcher.end();
+        batch.end();
     }
 }

@@ -18,16 +18,22 @@ public class GameObject {
 
     public GameObject(float x, float y, float width, float height, GameWorld world, TextureRegion textureRegion) {
         this.world = world;
-        rect = new Rectangle(x,y,width,height);
+        rect = new Rectangle(x,y+height,width,height);
         velocity = new Vector2(0,0);
         this.textureRegion = textureRegion;
     }
 
     public GameObject(float x, float y, float width, float height, GameWorld world, Animation animation) {
         this.world = world;
-        rect = new Rectangle(x,y,width,height);
+        rect = new Rectangle(x,y+height,width,height);
         velocity = new Vector2(0,0);
         this.animation = animation;
+    }
+
+    public GameObject(Rectangle rect,GameWorld world,TextureRegion textureRegion) {
+        this.world = world;
+        this.rect = rect;
+        this.textureRegion = textureRegion;
     }
 
     public void draw(SpriteBatch batch) {

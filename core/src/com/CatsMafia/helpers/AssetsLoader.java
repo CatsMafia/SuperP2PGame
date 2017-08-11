@@ -26,9 +26,6 @@ public class AssetsLoader {
 
     public static void load() {
 
-        ground = new TextureRegion(new Texture(Gdx.files.internal("Ground.png")));
-        ground.flip(false,true);
-
         idleTexture = new Texture(Gdx.files.internal("idle_Sheet.png"));
         walkTexture = new Texture(Gdx.files.internal("walk_Sheet.png"));
         jumpTexture = new Texture(Gdx.files.internal("jumpfall_Sheet.png"));
