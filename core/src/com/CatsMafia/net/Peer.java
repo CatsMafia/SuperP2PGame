@@ -53,7 +53,6 @@ public class Peer{
 
     public void sendMessage(String typeObj,int idObj,int opCode,int posX, int posY, float direction){
         for (PrintWriter out: outs) {
-            System.out.println("Sending " + new Message().getMessage(peerSocket.getInetAddress().toString(),typeObj,idObj,opCode,posX,posY,direction));
             out.println(new Message().getMessage(peerSocket.getInetAddress().toString(),typeObj,idObj,opCode,posX,posY,direction));
             out.flush();
         }

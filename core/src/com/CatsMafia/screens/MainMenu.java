@@ -10,10 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.net.InetAddress;
@@ -34,7 +31,10 @@ public class MainMenu implements Screen {
     TextField ipPlayers;
     TextField idPlayers;
     TextButton submit;
+    Label label;
     int id;
+
+
     public MainMenu(final MainGame gam) {
 
         try {
@@ -49,6 +49,8 @@ public class MainMenu implements Screen {
         ipPlayers.setPosition(1280/2,720/2+100);
         idPlayers = new TextField("id",skin);
         idPlayers.setPosition(1280/2,720/2+200);
+        label = new Label("Your ip : " + ip,skin);
+        label.setPosition(1280/2,720/2-100);
         submit = new TextButton("Submit",skin);
         submit.setBounds(1280/2,720/2,256,50);
         submit.addListener(new ClickListener() {
@@ -60,6 +62,7 @@ public class MainMenu implements Screen {
                 
             }
         });
+        stage.addActor(label);
         stage.addActor(ipPlayers);
         stage.addActor(submit);
         stage.addActor(idPlayers);
