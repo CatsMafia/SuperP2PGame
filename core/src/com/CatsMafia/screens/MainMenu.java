@@ -40,7 +40,7 @@ public class MainMenu implements Screen {
         try {
             ip = getIp();
         }catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         stage = new Stage();
@@ -119,8 +119,17 @@ public class MainMenu implements Screen {
             while (ee.hasMoreElements())
             {
                 InetAddress i = (InetAddress) ee.nextElement();
-                System.out.println(i.getHostAddress());
+
                 ips.add(i.getHostAddress());
+            }
+        }
+        for (String ip:ips) {
+            try {
+                if (ip.split("\\.")[0].equals("10")) {
+                    return ip;
+                }
+            }catch (Exception ex) {
+                continue;
             }
         }
         return ips.get(1);
