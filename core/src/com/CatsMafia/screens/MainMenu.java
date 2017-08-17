@@ -125,7 +125,7 @@ public class MainMenu implements Screen {
         }
         for (String ip:ips) {
             try {
-                if (ip.split("\\.")[0].equals("10")) {
+                if (ip.split("\\.")[0].equals("10") || ip.split("\\.")[0].equals("192")) {
                     return ip;
                 }
             }catch (Exception ex) {
