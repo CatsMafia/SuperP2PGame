@@ -2,11 +2,14 @@ package com.CatsMafia.gameworld;
 
 import com.CatsMafia.helpers.AssetsLoader;
 import com.CatsMafia.helpers.ParsGson;
+import com.CatsMafia.net.Message;
+import com.CatsMafia.net.Peer;
 import com.CatsMafia.objects.Bullet;
 import com.CatsMafia.objects.Character;
 import com.CatsMafia.objects.GameObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
@@ -17,16 +20,25 @@ public class GameWorld {
     private ArrayList<Bullet> bullets;
     public static final int g = 300; // ускорение свободного падения
     public static final int GROUND_LEVEL = 320; // уровень земди
+    public static ArrayList<Message> messages = new ArrayList<Message>();
+    private ArrayList<Character> characters = new ArrayList<Character>();
+    private Peer peer;
     private Map map;
 
-    public GameWorld() {
+    public GameWorld(Peer peer, Vector2 initPos,int id) {
         ParsGson parsGson = new ParsGson();
+        this.peer = peer;
         map = parsGson.parsMap(this);
-        character = new Character(0f,0f,100,100,this);
+        if (id == 1) {
+            character = new Character(initPos.x,initPos.y,100,100,this,peer,id,true);
+        }else {
+            character = new Character(initPos.x,initPos.y,100,100,this,peer,id,false);
+        }
         bullets = new ArrayList<Bullet>();
     }
 
     public void update(float delta) {
+        checkMessages();
         character.update(delta);
         ArrayList<Bullet> removes = new ArrayList<Bullet>();
         for (Bullet b: getBullets()) {
@@ -38,7 +50,16 @@ public class GameWorld {
             }
         }
         bullets.removeAll(removes);
-    } // delta время между update
+    }
+
+    private void checkMessages() {
+        if (!messages.isEmpty()) {
+            Message m = messages.get(0);
+            if (m.getOpCode() == peer.INIT_CHARACTER) {
+                characters.add(new Character(m.getPosX(),m.getPosY(),100,100, this,peer,m.getIdObj(),m.isDirection()));
+            }
+        }
+    }
 
     public Character getCharacter() {
         return character;

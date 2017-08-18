@@ -12,6 +12,8 @@ import javax.print.attribute.HashAttributeSet;
 
 public class Peer{
 
+    public final int INIT_CHARACTER = 0;
+
     private ServerSocket peerSocket;
     private Socket[] sockets;
     private ArrayList<Socket> clients;
@@ -51,7 +53,7 @@ public class Peer{
         }
     }
 
-    public void sendMessage(String typeObj,int idObj,int opCode,int posX, int posY, float direction){
+    public void sendMessage(String typeObj, int idObj, int opCode, float posX, float posY, boolean direction){
         for (PrintWriter out: outs) {
             out.println(new Message().getMessage(peerSocket.getInetAddress().toString(),typeObj,idObj,opCode,posX,posY,direction));
             out.flush();

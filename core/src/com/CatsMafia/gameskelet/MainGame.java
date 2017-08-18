@@ -1,10 +1,12 @@
 package com.CatsMafia.gameskelet;
 
+import com.CatsMafia.gameworld.GameRenderer;
 import com.CatsMafia.screens.MainMenu;
 import com.badlogic.gdx.Game;
 import com.CatsMafia.helpers.AssetsLoader;
 import com.CatsMafia.screens.GameScreen;
 import com.CatsMafia.net.Peer;
+import com.badlogic.gdx.math.Vector2;
 
 public class MainGame extends Game {
 
@@ -23,7 +25,16 @@ public class MainGame extends Game {
     }
 
     public void createPeer(String ip,int id) {
-
 	    peer = new Peer(9090,new String[]{ip},new int[]{9090},2,id);
     }
+
+    public void changeGameStage(int id) {
+        Vector2 initPos;
+        if (id == 1) {
+            initPos = new Vector2(0,0);
+        }else {
+            initPos = new Vector2(0,GameRenderer.HEIGHT_GAME);
+        }
+		setScreen(new GameScreen(peer,initPos,id));
+	}
 }

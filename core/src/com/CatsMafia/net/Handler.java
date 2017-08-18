@@ -1,5 +1,7 @@
 package com.CatsMafia.net;
 
+import com.CatsMafia.gameworld.GameWorld;
+
 import java.io.BufferedReader;
 
 public class Handler implements Runnable {
@@ -18,6 +20,7 @@ public class Handler implements Runnable {
                 inp = in.readLine();
                 Message m = new Message();
                 m.createMessage(inp);
+                GameWorld.messages.add(m);
             }catch (Exception e) {
                 continue;
             }

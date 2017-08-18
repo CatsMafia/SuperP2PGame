@@ -1,6 +1,7 @@
 package com.CatsMafia.objects;
 
 import com.CatsMafia.gameworld.GameWorld;
+import com.CatsMafia.net.Peer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,10 +14,12 @@ public class Character extends GameObject {
     private boolean isHit;
     private float hitTime;
     private boolean Lives = true;
-
-    public Character(float x, float y, float width, float height,GameWorld world){
+    private Peer peer;
+    public Character(float x, float y, float width, float height,GameWorld world,Peer peer,int id,boolean isRightDirection){
         super(x,y,width,height,world, (TextureRegion) null);
-        isRightDirection = true;
+        this.peer = peer;
+        this.peer.sendMessage("CHARACTER"+id,id,peer.INIT_CHARACTER,x,y,isRightDirection);
+        this.isRightDirection = isRightDirection;
         isHit = false;
         hitTime = 0;
     }

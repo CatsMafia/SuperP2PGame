@@ -59,6 +59,7 @@ public class MainMenu implements Screen {
                 ipEnemy = ipPlayers.getText();
                 id = Integer.valueOf(idPlayers.getText());
                 gam.createPeer(ipEnemy,id);
+                gam.changeGameStage(id);
                 
             }
         });
