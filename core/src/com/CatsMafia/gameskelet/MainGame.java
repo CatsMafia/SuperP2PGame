@@ -1,6 +1,7 @@
 package com.CatsMafia.gameskelet;
 
 import com.CatsMafia.gameworld.GameRenderer;
+import com.CatsMafia.gameworld.GameWorld;
 import com.CatsMafia.screens.MainMenu;
 import com.badlogic.gdx.Game;
 import com.CatsMafia.helpers.AssetsLoader;
@@ -31,9 +32,9 @@ public class MainGame extends Game {
     public void changeGameStage(int id) {
         Vector2 initPos;
         if (id == 1) {
-            initPos = new Vector2(0,0);
+            initPos = new Vector2(10,0);
         }else {
-            initPos = new Vector2(0,GameRenderer.HEIGHT_GAME);
+            initPos = new Vector2(GameRenderer.WIDTH_GAME,0);
         }
 		setScreen(new GameScreen(peer,initPos,id));
 	}
